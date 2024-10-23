@@ -23,7 +23,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            echo "No requirements.txt file found."
+          fi
 
       - name: Run Python script
         run: |
@@ -32,4 +36,8 @@ jobs:
           
       - name: Check server status
         run: |
-          curl -f http://localhost:8080 || echo "Server not running"  # Menguji koneksi ke server
+          if curl -f http://localhost:5000; then  # Ubah port sesuai dengan yang digunakan dalam app.py
+            echo "Server is running."
+          else
+            echo "Server not running."
+          fi
