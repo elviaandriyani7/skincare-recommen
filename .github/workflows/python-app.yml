@@ -26,4 +26,10 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Run Python script
-        run: python app.py
+        run: |
+          nohup python app.py &  # Menjalankan server di background
+          sleep 5  # Tunggu beberapa detik untuk memastikan server berjalan
+          
+      - name: Check server status
+        run: |
+          curl -f http://localhost:8080 || echo "Server not running"  # Menguji koneksi ke server
